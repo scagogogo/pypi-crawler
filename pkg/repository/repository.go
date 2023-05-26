@@ -28,7 +28,7 @@ func NewRepository(options ...*Options) *Repository {
 // DownloadIndex 下载服务器上的所有的包的索引文件
 func (x *Repository) DownloadIndex(ctx context.Context) (model.PackageIndexes, error) {
 	indexUrl := fmt.Sprintf("%s/simple", x.options.ServerURL)
-	responseBody, err := requests.GetString(ctx, indexUrl)
+	responseBody, err := x.getBytes(ctx, indexUrl)
 	if err != nil {
 		return nil, fmt.Errorf("download index from %s error: %s", indexUrl, err.Error())
 	}
@@ -40,7 +40,7 @@ func (x *Repository) DownloadIndex(ctx context.Context) (model.PackageIndexes, e
 
 	//_ = os.WriteFile("a.html", []byte(responseBody), os.ModePerm)
 
-	return x.ParseIndexPage(responseBody)
+	return x.ParseIndexPage(string(responseBody))
 }
 
 // ParseIndexPage 解析包索引页面
@@ -64,7 +64,7 @@ func (x *Repository) ParseIndexPage(indexPageHtml string) (model.PackageIndexes,
 // GetPackage 获取Python中的包的信息
 func (x *Repository) GetPackage(ctx context.Context, packageName string) (*model.Package, error) {
 	targetUrl := fmt.Sprintf("%s/pypi/%s/json", x.options.ServerURL, url.PathEscape(packageName))
-	packageBytes, err := requests.GetBytes(ctx, targetUrl)
+	packageBytes, err := x.getBytes(ctx, targetUrl)
 	if err != nil {
 		return nil, fmt.Errorf("request package %s information from %s error: %s", packageName, targetUrl, err.Error())
 	}
@@ -74,4 +74,13 @@ func (x *Repository) GetPackage(ctx context.Context, packageName string) (*model
 		return nil, fmt.Errorf("unmarshal package %s information response error, body = %s, error msg = %s", packageName, string(packageBytes), err.Error())
 	}
 	return pkg, nil
+}
+
+// 内部使用统一的方法来请求
+func (x *Repository) getBytes(ctx context.Context, targetUrl string) ([]byte, error) {
+	options := requests.NewOptions[any, []byte](targetUrl, requests.BytesResponseHandler())
+	if x.options.Proxy != "" {
+		options.AppendRequestSetting(requests.RequestSettingProxy(x.options.Proxy))
+	}
+	return requests.SendRequest[any, []byte](ctx, options)
 }
