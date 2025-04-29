@@ -2,28 +2,62 @@ package main
 
 import (
 	"fmt"
-	"github.com/scagogogo/pypi-crawler/pkg/repository"
+
+	"github.com/scagogogo/pypi-crawler/pkg/pypi/client"
+	"github.com/scagogogo/pypi-crawler/pkg/pypi/mirrors"
 )
 
 func main() {
+	// 使用不同的镜像源创建PyPI客户端
 
-	// 创建一个仓库
-	r := repository.NewRepository()
-	fmt.Println(r)
+	// 创建默认客户端（使用官方PyPI）
+	officialClient := mirrors.NewOfficialClient()
+	fmt.Println("官方PyPI客户端:", officialClient)
 
-	// 创建仓库的时候可以指定一些选项
-	// 仓库地址如果不指定的话使用的是官方的 https://pypi.org 这个地址
-	// 代理地址是表示请求仓库的包时挂着代理IP去请求，这样如果速率快一些的话能够避免被封禁
-	r = repository.NewRepository(repository.NewOptions().SetServerURL("https://pypi.org").SetProxy(""))
+	// 使用国内镜像源
 
-	// 内置了一些国内常见的pypi的镜像仓库，可以开箱即用不用再指定仓库地址
-	// 比如连接到豆瓣的镜像源
-	r = repository.NewDouBanRepository()
+	// 清华大学镜像
+	tsinghuaClient := mirrors.NewTsinghuaClient()
+	fmt.Println("清华大学镜像客户端:", tsinghuaClient)
 
-	// 其他的一些可选的镜像源
-	r = repository.NewTencentCloudRepository()
-	r = repository.NewUstcRepository()
-	r = repository.NewNetEaseRepository()
-	r = repository.NewTSingHuaRepository()
+	// 豆瓣镜像
+	doubanClient := mirrors.NewDoubanClient()
+	fmt.Println("豆瓣镜像客户端:", doubanClient)
 
+	// 阿里云镜像
+	aliyunClient := mirrors.NewAliyunClient()
+	fmt.Println("阿里云镜像客户端:", aliyunClient)
+
+	// 腾讯云镜像
+	tencentClient := mirrors.NewTencentClient()
+	fmt.Println("腾讯云镜像客户端:", tencentClient)
+
+	// 中国科技大学镜像
+	ustcClient := mirrors.NewUstcClient()
+	fmt.Println("中国科技大学镜像客户端:", ustcClient)
+
+	// 网易镜像
+	neteaseClient := mirrors.NewNeteaseClient()
+	fmt.Println("网易镜像客户端:", neteaseClient)
+
+	// 使用自定义选项
+	fmt.Println("\n创建带自定义选项的客户端:")
+
+	customOptions := client.NewOptions().
+		WithUserAgent("PyPI-Crawler/1.0").
+		WithTimeout(30).
+		WithMaxRetries(3)
+
+	customClient := mirrors.NewOfficialClient(customOptions)
+	fmt.Println("自定义客户端:", customClient)
+
+	// 显示所有支持的镜像源URL
+	fmt.Println("\n支持的镜像源URL:")
+	fmt.Println("官方PyPI:", mirrors.OfficialURL)
+	fmt.Println("清华大学:", mirrors.TsinghuaURL)
+	fmt.Println("豆瓣:", mirrors.DoubanURL)
+	fmt.Println("阿里云:", mirrors.AliyunURL)
+	fmt.Println("腾讯云:", mirrors.TencentURL)
+	fmt.Println("中国科技大学:", mirrors.UstcURL)
+	fmt.Println("网易:", mirrors.NeteaseURL)
 }
