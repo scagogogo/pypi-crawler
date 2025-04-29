@@ -12,11 +12,7 @@ go get -u github.com/scagogogo/pypi-crawler
 
 # 三、API使用指南
 
-本库提供了两套API：新版API基于`pkg/pypi`包，推荐使用；旧版API基于`pkg/repository`包，为了向后兼容而保留。
-
-## 3.1 新版API - 推荐使用
-
-### 3.1.1 创建客户端
+## 3.1 创建客户端
 
 首先需要创建一个PyPI客户端实例：
 
@@ -61,7 +57,7 @@ func main() {
 }
 ```
 
-### 3.1.2 获取包信息
+## 3.2 获取包信息
 
 获取特定包的最新版本信息：
 
@@ -126,7 +122,7 @@ func main() {
 }
 ```
 
-### 3.1.3 获取特定版本信息
+## 3.3 获取特定版本信息
 
 获取包的特定版本信息：
 
@@ -171,7 +167,7 @@ func main() {
 }
 ```
 
-### 3.1.4 获取包的所有版本
+## 3.4 获取包的所有版本
 
 列出一个包的所有发布版本：
 
@@ -211,7 +207,7 @@ func main() {
 }
 ```
 
-### 3.1.5 检查包的漏洞
+## 3.5 检查包的漏洞
 
 检查特定版本包的已知漏洞：
 
@@ -256,7 +252,7 @@ func main() {
 }
 ```
 
-### 3.1.6 获取所有包列表
+## 3.6 获取所有包列表
 
 获取PyPI索引中的所有包名：
 
@@ -295,7 +291,7 @@ func main() {
 }
 ```
 
-### 3.1.7 搜索包
+## 3.7 搜索包
 
 通过关键词搜索包：
 
@@ -325,99 +321,6 @@ func main() {
 	for i, pkg := range results {
 		fmt.Printf("  %d. %s\n", i+1, pkg)
 	}
-}
-```
-
-## 3.2 旧版API（向后兼容）
-
-以下是旧版API的使用示例，为了向后兼容而保留。新项目推荐使用上面的新版API。
-
-### 3.2.1 创建仓库
-
-```go
-package main
-
-import (
-	"fmt"
-	"github.com/scagogogo/pypi-crawler/pkg/repository"
-)
-
-func main() {
-	// 创建一个仓库
-	r := repository.NewRepository()
-	fmt.Println(r)
-
-	// 创建仓库的时候可以指定一些选项
-	// 仓库地址如果不指定的话使用的是官方的 https://pypi.org 这个地址
-	// 代理地址是表示请求仓库的包时挂着代理IP去请求，这样如果速率快一些的话能够避免被封禁
-	r = repository.NewRepository(repository.NewOptions().SetServerURL("https://pypi.org").SetProxy(""))
-
-	// 内置了一些国内常见的pypi的镜像仓库，可以开箱即用不用再指定仓库地址
-	// 比如连接到豆瓣的镜像源
-	r = repository.NewDouBanRepository()
-
-	// 其他的一些可选的镜像源
-	r = repository.NewTencentCloudRepository()
-	r = repository.NewUstcRepository()
-	r = repository.NewNetEaseRepository()
-	r = repository.NewTSingHuaRepository()
-}
-```
-
-### 3.2.2 下载索引
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"github.com/scagogogo/pypi-crawler/pkg/repository"
-)
-
-func main() {
-	// 下载仓库中所有的包的索引目录
-	r := repository.NewUstcRepository()
-	index, err := r.DownloadIndex(context.Background())
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(fmt.Sprintf("仓库中有 %d 个包", len(index)))
-
-	// Output:
-	// 仓库中有 515608 个包
-}
-```
-
-### 3.2.3 获取包信息
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"github.com/scagogogo/pypi-crawler/pkg/repository"
-)
-
-func main() {
-	// 获取名为requests的包的信息
-	r := repository.NewRepository()
-	packageInformation, err := r.GetPackage(context.Background(), "requests")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(packageInformation.Information.Name)
-	fmt.Println(packageInformation.Information.Version)
-	fmt.Println(packageInformation.Information.Description)
-
-	// Output:
-	// requests
-	//2.31.0
-	//# Requests
-	//
-	//**Requests** is a simple, yet elegant, HTTP library.
-	// ...
 }
 ```
 
