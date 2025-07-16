@@ -27,17 +27,12 @@ export default defineConfig({
       { text: '首页', link: '/' },
       { text: '指南', link: '/quick-start' },
       { text: 'API', link: '/api-reference' },
-      { 
-        text: '更多',
-        items: [
-          { text: '示例代码', link: '/examples' },
-          { text: '最佳实践', link: '/best-practices' },
-          { text: '常见问题', link: '/faq' }
-        ]
-      },
-      { 
-        text: 'GitHub', 
-        link: 'https://github.com/scagogogo/pypi-crawler' 
+      { text: '示例代码', link: '/examples' },
+      { text: '最佳实践', link: '/best-practices' },
+      { text: '常见问题', link: '/faq' },
+      {
+        text: 'GitHub',
+        link: 'https://github.com/scagogogo/pypi-crawler'
       }
     ],
     
