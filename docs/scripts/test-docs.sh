@@ -8,10 +8,13 @@ set -e
 echo "🧪 PyPI Crawler 文档测试"
 echo "========================"
 
+# 进入docs目录
+cd "$(dirname "$0")/.." || exit 1
+
 # 检查依赖是否已安装
 if [ ! -d "node_modules" ]; then
     echo "❌ 错误: 未找到 node_modules 目录"
-    echo "请先运行: npm install 或 ./scripts/setup-docs.sh"
+    echo "请先运行: npm install 或 ./docs/scripts/setup-docs.sh"
     exit 1
 fi
 
@@ -28,28 +31,28 @@ else
 fi
 
 # 检查构建输出
-if [ -d "docs/.vitepress/dist" ]; then
+if [ -d ".vitepress/dist" ]; then
     echo "✅ 构建输出目录存在"
-    
+
     # 检查关键文件
-    if [ -f "docs/.vitepress/dist/index.html" ]; then
+    if [ -f ".vitepress/dist/index.html" ]; then
         echo "✅ 首页文件存在"
     else
         echo "❌ 首页文件缺失"
         exit 1
     fi
-    
-    if [ -f "docs/.vitepress/dist/api-reference.html" ]; then
+
+    if [ -f ".vitepress/dist/api-reference.html" ]; then
         echo "✅ API 文档文件存在"
     else
         echo "❌ API 文档文件缺失"
         exit 1
     fi
-    
+
     # 统计生成的文件
-    html_count=$(find docs/.vitepress/dist -name "*.html" | wc -l)
+    html_count=$(find .vitepress/dist -name "*.html" | wc -l)
     echo "✅ 生成了 $html_count 个 HTML 页面"
-    
+
 else
     echo "❌ 构建输出目录不存在"
     exit 1
@@ -58,7 +61,7 @@ fi
 # 清理构建输出（可选）
 echo ""
 echo "🧹 清理构建输出..."
-rm -rf docs/.vitepress/dist
+rm -rf .vitepress/dist
 echo "✅ 清理完成"
 
 echo ""

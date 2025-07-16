@@ -371,23 +371,23 @@ pkg/pypi/
 
 ```bash
 # 运行设置脚本
-./scripts/setup-docs.sh
+./docs/scripts/setup-docs.sh
 
 # 或手动安装
-npm install
+cd docs && npm install
 ```
 
 ## 6.2 本地开发
 
 ```bash
 # 启动开发服务器 (热重载)
-npm run docs:dev
+cd docs && npm run docs:dev
 
 # 构建生产版本
-npm run docs:build
+cd docs && npm run docs:build
 
 # 预览生产版本
-npm run docs:preview
+cd docs && npm run docs:preview
 ```
 
 ## 6.3 自动部署
