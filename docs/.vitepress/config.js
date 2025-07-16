@@ -7,6 +7,14 @@ export default defineConfig({
   // 基础配置
   base: '/pypi-crawler/',
   lang: 'zh-CN',
+
+  // 忽略死链接检查
+  ignoreDeadLinks: [
+    // 忽略本地开发服务器链接
+    /^http:\/\/localhost/,
+    // 忽略相对路径链接
+    /^\.\.?\//
+  ],
   
   // 主题配置
   themeConfig: {

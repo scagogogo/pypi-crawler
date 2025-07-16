@@ -1,6 +1,7 @@
 {
   "name": "pypi-crawler-docs",
   "version": "1.0.0",
+  "type": "module",
   "description": "PyPI Crawler API Documentation",
   "scripts": {
     "docs:dev": "vitepress dev docs",
