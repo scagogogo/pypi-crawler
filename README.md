@@ -4,9 +4,13 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://scagogogo.github.io/pypi-crawler/)
 
+> 🚀 **快速开始**: [查看完整文档](https://scagogogo.github.io/pypi-crawler/) | [API参考](https://scagogogo.github.io/pypi-crawler/api-reference.html) | [示例代码](https://scagogogo.github.io/pypi-crawler/examples.html)
+
 # 一、这是什么？
 
 这是一个pypi的爬虫库，能够让你获取pypi上的包的信息。本库提供了完整的PyPI访问接口，支持多种镜像源，并有丰富的配置选项。
+
+> 📖 **完整文档**: [https://scagogogo.github.io/pypi-crawler/](https://scagogogo.github.io/pypi-crawler/)
 
 ## 📚 完整文档
 
