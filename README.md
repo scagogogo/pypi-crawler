@@ -1,8 +1,25 @@
 # PyPi Crawler
 
+[![Go Version](https://img.shields.io/badge/Go-1.19+-00ADD8?style=flat&logo=go)](https://golang.org/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://scagogogo.github.io/pypi-crawler/)
+
 # 一、这是什么？
 
 这是一个pypi的爬虫库，能够让你获取pypi上的包的信息。本库提供了完整的PyPI访问接口，支持多种镜像源，并有丰富的配置选项。
+
+## 📚 完整文档
+
+访问我们的在线文档站点获取详细的使用指南：
+
+**🌐 [https://scagogogo.github.io/pypi-crawler/](https://scagogogo.github.io/pypi-crawler/)**
+
+文档包含：
+- 🚀 [快速开始指南](https://scagogogo.github.io/pypi-crawler/quick-start.html)
+- 📖 [完整API文档](https://scagogogo.github.io/pypi-crawler/api-reference.html)
+- 💡 [丰富的示例代码](https://scagogogo.github.io/pypi-crawler/examples.html)
+- 🔧 [配置和最佳实践](https://scagogogo.github.io/pypi-crawler/best-practices.html)
+- ❓ [常见问题解答](https://scagogogo.github.io/pypi-crawler/faq.html)
 
 # 二、安装依赖
 
@@ -346,15 +363,57 @@ pkg/pypi/
 ├── models/         - 数据模型
 ```
 
-# 六、贡献指南
+# 六、文档开发
+
+本项目使用 VitePress 构建文档站点。如果您想在本地运行或贡献文档：
+
+## 6.1 快速设置
+
+```bash
+# 运行设置脚本
+./scripts/setup-docs.sh
+
+# 或手动安装
+npm install
+```
+
+## 6.2 本地开发
+
+```bash
+# 启动开发服务器 (热重载)
+npm run docs:dev
+
+# 构建生产版本
+npm run docs:build
+
+# 预览生产版本
+npm run docs:preview
+```
+
+## 6.3 自动部署
+
+文档会在推送到 `main` 分支时自动部署到 GitHub Pages：
+- 📝 源码：`docs/` 目录
+- 🌐 站点：https://scagogogo.github.io/pypi-crawler/
+- 🤖 部署：GitHub Actions 自动化
+
+# 七、贡献指南
 
 欢迎提交Issue和Pull Request。在提交PR前，请确保：
 
 1. 代码通过所有测试
 2. 新功能已添加相应的测试
-3. 文档已更新
+3. 文档已更新（包括在线文档）
+4. 遵循项目的代码风格
 
-# 七、许可证
+## 文档贡献
+
+- 文档源文件位于 `docs/` 目录
+- 使用 Markdown 格式编写
+- 本地测试后再提交
+- 支持中文文档
+
+# 八、许可证
 
 本项目使用MIT许可证。详情请查看LICENSE文件。
 
